@@ -18,3 +18,4 @@ namespace MusicPlayer.Models
             return new MenuPlay();
         }
     }
+}
