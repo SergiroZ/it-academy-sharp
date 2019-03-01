@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using MusicPlayer.Interface;
 
 namespace MusicPlayer.Models
@@ -11,20 +9,13 @@ namespace MusicPlayer.Models
         {
             HeaderState(StRandom);
 
-            var newThreadFind = new Thread(InterruptEndExecuteFindSong);
+            var newThreadFind = new Thread(SetIsSeekSong);
             newThreadFind.Start();
 
             SongHandler(Random);
 
             FooterState();
             return new MenuPlay();
-        }
-
-
-        private static void InterruptEndExecuteFindSong()
-        {
-            while (Console.KeyAvailable) Console.ReadKey(false);
-            if (Console.ReadKey(false).Key == ConsoleKey.F) IsSeek = true;
         }
     }
 }

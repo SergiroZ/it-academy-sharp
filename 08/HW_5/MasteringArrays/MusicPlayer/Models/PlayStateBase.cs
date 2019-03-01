@@ -6,13 +6,13 @@ namespace MusicPlayer.Models
 {
     public abstract class PlayStateBase
     {
-        internal const int Forward = -1;
-        internal const int Back = -2;
-        internal const int Random = -3;
+        protected const int Forward = -1;
+        protected const int Back = -2;
+        protected const int Random = -3;
 
-        internal const string StForward = "Forward";
-        internal const string StBack = "Back";
-        internal const string StRandom = "Random";
+        protected const string StForward = "Forward";
+        protected const string StBack = "Back";
+        protected const string StRandom = "Random";
 
         private static readonly Random rng =
             new Random((int) DateTime.Now.Ticks & 0x0000FFFF);
@@ -61,14 +61,10 @@ namespace MusicPlayer.Models
             for (var i = 0; i < cnt; i++) tmpList[i] = i + 1;
 
             if (direction == Back)
-            {
-                for (int i = 0, j = cnt - 1; i < cnt; i++, j--) tmpList[i] = j + 1;
-            }
+                for (int i = 0, j = cnt - 1; i < cnt; i++, j--)
+                    tmpList[i] = j + 1;
 
-            if (direction == Random)
-            {
-                Shuffle(tmpList);
-            }
+            if (direction == Random) Shuffle(tmpList);
 
             foreach (var ps in tmpList)
             {
@@ -95,6 +91,7 @@ namespace MusicPlayer.Models
             }
         }
 
+
         private static void ProgressPlay(Song song, int idx)
         {
             using (var progress = new ProgressBar())
@@ -115,6 +112,12 @@ namespace MusicPlayer.Models
 
                 progress.WriteLine(" .. Done.\n");
             }
+        }
+
+        protected static void SetIsSeekSong()
+        {
+            while (Console.KeyAvailable) Console.ReadKey(false);
+            if (Console.ReadKey(false).Key == ConsoleKey.F) IsSeek = true;
         }
     }
 }
